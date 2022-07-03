@@ -1,4 +1,5 @@
 import { useSession } from 'next-auth/react'
+import NewTweet from 'components/NewTweet'
 
 export default function Home() {
   const { data: session, status } = useSession()
@@ -9,7 +10,7 @@ export default function Home() {
 
   return (
     <div>
-      {session ? <p>You are logged in!</p> : <p>You are not logged in 😞</p>}
+      {session ? <NewTweet /> : <p>You are not logged in 😞</p>}
     </div>
   )
 }
