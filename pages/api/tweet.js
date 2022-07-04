@@ -21,6 +21,7 @@ export default async function handler(req, res) {
       await prisma.tweet.create({
         data: {
           content: req.body.content,
+          parent: req.body.parent || null,
           author: {
             connect: { id: user.id },
           },
