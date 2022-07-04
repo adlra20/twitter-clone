@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export default function  NewTweet() {
   const [content, setContent] = useState('')
   const { data: session } = useSession()
+  const router = useRouter()
 
   if (!session) return null
 
   return (
-  <form onSubmit={(e) => {
+  <form onSubmit={async (e) => {
     e.preventDefault()
 
     if (!content) {
@@ -16,7 +18,7 @@ export default function  NewTweet() {
       return
     }
 
-    fetch('/api/tweet', {
+    await fetch('/api/tweet', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -25,6 +27,8 @@ export default function  NewTweet() {
         content,
       }),
     })
+
+    router.reload(window.location.pathname)
   }}>
     <div className='flex'>
       <div className='flex-1 px-1 pt-2 mt-2 mr-1 ml-1'>
